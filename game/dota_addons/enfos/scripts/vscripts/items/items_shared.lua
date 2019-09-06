@@ -93,12 +93,10 @@ end
 function blink(keys)
 	--PrintTable(keys)
 	local point = keys.target_points[1]
-	if math.abs(point.x) < 1500 then
-		if point.x < 0 then point.x = -1500
-		else point.x = 1500 end
-	end
 	local caster = keys.caster
 	local casterPos = caster:GetAbsOrigin()
+	if casterPos.x < 0 and point.x > -1500 then point.x = -1500 end
+	if casterPos.x > 0 and point.x < 1500 then point.x = 1500 end
 	local pid = caster:GetPlayerID()
 
 	ProjectileManager:ProjectileDodge(caster)
