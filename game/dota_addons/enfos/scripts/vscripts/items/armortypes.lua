@@ -66,7 +66,7 @@ function CalculateArmor(keys)
 					callback = function()
 						if caster:IsAlive() then 
 							caster:SetHealth(health)
-							local armor = caster:GetPhysicalArmorValue()
+							local armor = caster:GetPhysicalArmorValue(false)
 							local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 							damage = damage * damageMultiplication
 						--print(damage)
@@ -99,7 +99,7 @@ function CalculateArmor(keys)
 					callback = function()
 						if caster:IsAlive() then 
 							caster:SetHealth(health)
-							local armor = caster:GetPhysicalArmorValue()
+							local armor = caster:GetPhysicalArmorValue(false)
 							local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 							damage = damage * damageMultiplication
 						--print(damage)
@@ -128,7 +128,7 @@ function CalculateArmor(keys)
 					callback = function()
 						if caster:IsAlive() then 
 							caster:SetHealth(health)
-							local armor = caster:GetPhysicalArmorValue()
+							local armor = caster:GetPhysicalArmorValue(false)
 							local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 							damage = damage * damageMultiplication
 						--print("Damage dealt as magical: "..damage)
@@ -153,7 +153,7 @@ function CalculateArmor(keys)
 				dealOrHeal = 2
 				damage = damage * 0.5
 			elseif attackType == "modifier_attack_chaos" then
-				local armor = caster:GetPhysicalArmorValue()
+				local armor = caster:GetPhysicalArmorValue(false)
 				local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 
 				dealOrHeal = 2
@@ -165,7 +165,7 @@ function CalculateArmor(keys)
 					callback = function()
 						if caster:IsAlive() then 
 							caster:SetHealth(health)
-							local armor = caster:GetPhysicalArmorValue()
+							local armor = caster:GetPhysicalArmorValue(false)
 							local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 							damage = damage * damageMultiplication
 							DealDamage(attacker, caster, damage, DAMAGE_TYPE_MAGICAL, 0)
@@ -186,7 +186,7 @@ function CalculateArmor(keys)
 					callback = function()
 						if caster:IsAlive() then 
 							caster:SetHealth(health)
-							local armor = caster:GetPhysicalArmorValue()
+							local armor = caster:GetPhysicalArmorValue(false)
 							local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 							damage = damage * 0.75 * damageMultiplication
 							--print(damage)
@@ -217,7 +217,7 @@ function CalculateArmor(keys)
 					callback = function()
 						if caster:IsAlive() then 
 							caster:SetHealth(health)
-							local armor = caster:GetPhysicalArmorValue()
+							local armor = caster:GetPhysicalArmorValue(false)
 							local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 							damage = damage * damageMultiplication * 0.05
 							--print(damage)

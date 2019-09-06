@@ -469,7 +469,7 @@ function TelekineticStormPhysics( keys )
 								ApplyDamage(damage_table)
 
 								-- Calculate how much physical damage was dealt
-								local targetArmor = unit.current_target:GetPhysicalArmorValue()
+								local targetArmor = unit.current_target:GetPhysicalArmorValue(false)
 								local damageReduction = ((0.06 * targetArmor) / (1 + 0.06 * targetArmor))
 								local damagePostReduction = spirit_damage * (1 - damageReduction)
 

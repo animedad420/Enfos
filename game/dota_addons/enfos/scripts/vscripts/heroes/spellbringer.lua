@@ -217,7 +217,7 @@ function havroth_reflect(keys)
 	local caster = keys.caster
 	local percentReflected = keys.damage_reflected / 100
 
-	local armor = caster:GetPhysicalArmorValue()
+	local armor = caster:GetPhysicalArmorValue(false)
 	local damageMultiplication = ((0.06 * armor) / (1 + 0.06 * armor)) + 1
 	print("-----")
 	print(damage)
