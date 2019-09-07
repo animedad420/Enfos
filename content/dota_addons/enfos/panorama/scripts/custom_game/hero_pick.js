@@ -7,6 +7,7 @@ var mapData = {};
 var aspectData = {};
 var isAutoOrPassive = {};
 var randoCheck = false;
+var doWeCheckTheChatBox = true;
 
 GameEvents.Subscribe("hero_change",UpdatePickUI);
 GameEvents.Subscribe("hero_hover",UpdatePrePickIcon);
@@ -620,6 +621,7 @@ function PickCheck() {
 		$.Schedule(0.1,function() {GameUI.SetCameraTarget(-1);});
 	} else {
 		$("#PickUIBase").visible = true;
+		doWeCheckTheChatBox = true;
 		GameUI.SetCameraTarget(Players.GetPlayerHeroEntityIndex(Game.GetLocalPlayerID()));
 		$.Schedule(0.1,function() {GameUI.SelectUnit(Players.GetPlayerHeroEntityIndex(Game.GetLocalPlayerID()),false);});
 		
@@ -629,7 +631,8 @@ function PickCheck() {
 		//$('#PortraitLabel').visible = false;
 		//$('#WelcomeBox').visible = true;
 	}
-	ChatBoxCheck();
+	if($("#PickUIBase").visible == true) ChatBoxCheck();
+	else if(doWeCheckTheChatBox == true) ChatBoxCheck();
 }
 
 function HeroButtonPressed(event) {
@@ -1190,7 +1193,7 @@ function UpdateTimer() {
 		if (time >= -10) {
 			realTime = Math.abs(time);
 			$('#RoundLabel').text = "GAME STARTS IN";
-			if($("#PickUIBase").visible == true) PickCheck();
+			//if($("#PickUIBase").visible == true) PickCheck();
 		}
 	}
 	else {
@@ -1199,13 +1202,17 @@ function UpdateTimer() {
 		realTime = (Math.floor(time/60)).toString()+":"+second;
 		$('#RoundLabel').text = "WAVE "+CustomNetTables.GetTableValue("this_wave_table","round").value.toString();
 	}
-	$('#TimeLabel').text = realTime;
-	$('#PickRandomVideo').RemoveClass("OhGodNoItsTerrible"+shifter);
-	$('#DiceBox').RemoveClass("OhGodNoItsTerrible"+((shifter%5)*24));
-	shifter += 1;
-	if(shifter == 120) shifter = 0;
-	$('#PickRandomVideo').AddClass("OhGodNoItsTerrible"+shifter);
-	if (heroData[Game.GetLocalPlayerID()] == "npc_dota_hero_random") $('#DiceBox').AddClass("OhGodNoItsTerrible"+((shifter%5)*24));
+	PickCheck();
+	if($("#PickUIBase").visible == true)
+	{
+		$('#TimeLabel').text = realTime;
+		$('#PickRandomVideo').RemoveClass("OhGodNoItsTerrible"+shifter);
+		$('#DiceBox').RemoveClass("OhGodNoItsTerrible"+((shifter%5)*24));
+		shifter += 1;
+		if(shifter == 120) shifter = 0;
+		$('#PickRandomVideo').AddClass("OhGodNoItsTerrible"+shifter);
+		if (heroData[Game.GetLocalPlayerID()] == "npc_dota_hero_random") $('#DiceBox').AddClass("OhGodNoItsTerrible"+((shifter%5)*24));
+	}
 	$.Schedule(0.1,function() {UpdateTimer();});
 }
 
@@ -1216,6 +1223,7 @@ function ChatBoxCheck() {
 	if($("#PickUIBase").visible == false) {
 		$('#ChatField').SetAcceptsFocus(false);
 		$.DispatchEvent("DropInputFocus", $('#ChatField'));
+		doWeCheckTheChatBox = false;
 	}
 	else
 	{
