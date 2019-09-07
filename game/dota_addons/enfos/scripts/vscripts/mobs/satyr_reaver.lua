@@ -40,7 +40,7 @@ function SatyrReaverThink()
 	end
 	
 	-- Spawn a broodmother whenever we're able to do so.
-	if ABILITY_curse:IsFullyCastable() then
+	--[[if ABILITY_curse:IsFullyCastable() then
 		local units = FindUnitsInRadius(thisEntity:GetTeamNumber(), thisEntity:GetAbsOrigin(), thisEntity, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
 		if units ~= nil then
 			if #units > 0 then
@@ -51,7 +51,7 @@ function SatyrReaverThink()
 			end
 		end
 		return 1.0
-	end
+	end]]
 	return 0.25 + RandomFloat( 0.25, 0.5 )
 end
 
