@@ -23,7 +23,7 @@
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"		"modifier_faenrae_champion_faenrae_blood_true_sight"
+					"ModifierName"		"modifier_item_gem_of_true_sight"
 					"Target"			"CASTER"
 				}
 				"ApplyModifier"

@@ -9,14 +9,14 @@
 	{
 		"modifier_satyr_sight"
 		{
-			"IsHidden"				"1"
+			"IsHidden"				"0"
 			"Passive"				"1"
 			"IsPurgable"			"0"
 			"OnCreated"
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"		"modifier_satyr_sight_true_sight"
+					"ModifierName"		"modifier_item_gem_of_true_sight"
 					"Target"			"CASTER"
 				}
 			}
