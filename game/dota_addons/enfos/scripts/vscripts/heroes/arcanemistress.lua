@@ -73,4 +73,7 @@ function HailstormEnd(keys)
 	Enfos.hailstormDummy:Destroy()
 	Enfos.hailstormDummy = 0
 	Timers:RemoveTimer("hlsm"..pid)
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		caster:FindModifierByName("modifier_soul_feast_lua"):ResetTrollUlt(true)
+	end
 end
