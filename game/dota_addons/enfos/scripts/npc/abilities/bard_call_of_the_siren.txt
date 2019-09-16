@@ -63,6 +63,10 @@
 				{
 					"ScriptFile"    "scripts/vscripts/heroes/bard.lua"
 					"Function"      "call_of_the_siren"
+					"duration"		"%illusion_duration"
+					"images_count"	"%images_count"
+					"damage"		"%siren_damage"
+					"bat"			"%bat"
 				}
 			}
 		}
@@ -89,5 +93,10 @@
 			"var_type"					"FIELD_INTEGER"
 			"siren_damage"				"1300 1300 1300 1300 3000 3000 3000 3000 5500 5500"
 		}	
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"bat"						"0.6 0.6 0.6 0.5 0.5 0.5 0.5 0.5 0.25 0.25"
+		}
 	}
 }

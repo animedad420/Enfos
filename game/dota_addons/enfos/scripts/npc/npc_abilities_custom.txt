@@ -983,6 +983,10 @@
 					{
 						"ScriptFile"    "scripts/vscripts/heroes/bard.lua"
 						"Function"      "call_of_the_siren"
+						"duration"		"%illusion_duration"
+						"images_count"	"%images_count"
+						"damage"		"%siren_damage"
+						"bat"			"%bat"
 					}
 				}
 			}
@@ -1009,6 +1013,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"siren_damage"				"1300 1300 1300 1300 3000 3000 3000 3000 5500 5500"
 			}	
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bat"						"0.6 0.6 0.6 0.5 0.5 0.5 0.5 0.5 0.25 0.25"
+			}
 		}
 	}
 	//=================================================================================================================
@@ -1020,7 +1029,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"naga_siren_mirror_image"
+		"AbilityTextureName"			"medusa_split_shot"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
@@ -1067,10 +1076,6 @@
 					"MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
-				"Properties"
-		    	{
-		    		"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "-550"
-		    	}
 			}
 		}
 	

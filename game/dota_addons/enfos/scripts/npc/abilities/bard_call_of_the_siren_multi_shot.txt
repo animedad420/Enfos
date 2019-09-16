@@ -7,7 +7,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityTextureName"			"naga_siren_mirror_image"
+	"AbilityTextureName"			"medusa_split_shot"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"AbilityCooldown"				"0"
 	"AbilityManaCost"				"0"
@@ -54,10 +54,6 @@
 				"MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
-			"Properties"
-	    	{
-	    		"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "-550"
-	    	}
 		}
 	}
 
