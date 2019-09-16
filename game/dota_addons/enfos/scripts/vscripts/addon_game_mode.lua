@@ -3565,11 +3565,6 @@ function CEnfosGameMode:OnEntityKilled( event )
 		CustomGameEventManager:Send_ServerToAllClients("creep_count_update", { radC = Enfos.RADIANT_CREEPCOUNT, dirC = Enfos.DIRE_CREEPCOUNT })
 	end
 	
-	--This double checks if the unit killed itself by walking onto the base triggers, and prevents gold or exp from being distributed.
-	if killer == killedUnit then
-		return
-	end
-	
 	local corpseBlacklist = {
 				"npc_dota_creature_wood_troll",
 				"npc_dota_rock_troll",
@@ -3586,6 +3581,11 @@ function CEnfosGameMode:OnEntityKilled( event )
 
 	--print(killer)
 	if killedUnit:IsCreature() then
+		--This double checks if the unit killed itself by walking onto the base triggers, and prevents gold or exp from being distributed.
+		if killer == killedUnit then
+			return
+		end
+		
 		--Set all killed units to have a corpse on default
 		if killedUnit.noCorpse == nil then
 			killedUnit.noCorpse = false
