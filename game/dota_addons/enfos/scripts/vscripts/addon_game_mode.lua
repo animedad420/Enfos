@@ -1208,20 +1208,6 @@ function CEnfosGameMode:OnPlayerCastAbility(keys)
 	if hero then
 		local hero_name = hero:GetUnitName()
 		local ability_name = keys.abilityname
-		--print(hero_name)
-		if hero_name == "npc_dota_hero_troll_warlord" then
-		--print("Troll casted an ability")
-			if ability_name ~= "troll_cannibal_scalping_cry" and ability_name ~= "troll_cannibal_bloodboil" and ability_name ~= "troll_cannibal_soul_drain" and ability_name ~= "item_winged_leather_boots" and cannibalIndex ~= nil then
-				--print("Troll casted an ult")
-				Timers:CreateTimer(DoUniqueString("removeSoulFeastUlt"), {
-					endTime = 0.1,
-					callback = function()
-						hero:RemoveModifierByName("modifier_soul_feast_passive_timer")
-					end
-				})
-				
-			end
-		end
 		if self[hero_name] and self[hero_name].abilityname then
 			self[hero_name]:AbilityHandler(keys)
 			print(self[hero_name])
@@ -1780,11 +1766,6 @@ function CEnfosGameMode:OnPlayerPicked( event )
 	if spawnedUnit ~= "npc_dota_hero_wisp" then
 		spawnedUnitIndex:AddAbility("enfos_attribute_bonus")
 	end]]
-
-	--Sets the initial cannibal index for if Troll Warlord is being played.
-	if spawnedUnit == "npc_dota_hero_troll_warlord" then
-		cannibalIndex = spawnedUnitIndex
-	end
 	
 	--Apply scepter buff to Treant for 5th UI slot
 	if spawnedUnitIndex:GetClassname() == "npc_dota_hero_treant" then
@@ -2105,8 +2086,15 @@ function CEnfosGameMode:UseTome(hero, stat, value)
 			if nilCheck ~= nil then
 				local innateCheck = GameRules.AbilityKV[caster:GetAbilityByIndex(i):GetAbilityName()].Innate
 				if innateCheck == nil and caster:GetAbilityByIndex(i):IsCooldownReady() then
-					pointsUsed = pointsUsed + caster:GetAbilityByIndex(i):GetLevel()
-					caster:GetAbilityByIndex(i):SetLevel(0)
+					if i == 3 and caster:GetUnitName() == "npc_dota_hero_troll_warlord" then 
+						if nilCheck == "troll_cannibal_soul_feast" then
+							pointsUsed = pointsUsed + caster:GetAbilityByIndex(i):GetLevel()
+							caster:GetAbilityByIndex(i):SetLevel(0)
+						end
+					else
+						pointsUsed = pointsUsed + caster:GetAbilityByIndex(i):GetLevel()
+						caster:GetAbilityByIndex(i):SetLevel(0)
+					end
 				end
 			end
 		end
@@ -3126,6 +3114,24 @@ function CEnfosGameMode:FilterExecuteOrder( filterTable )
 		end
 	end
 	
+	if order_type == DOTA_UNIT_ORDER_TRAIN_ABILITY then
+		local first_unit = EntIndexToHScript(units["0"])
+		if first_unit:GetUnitName() == "npc_dota_hero_troll_warlord" then
+			local ability = EntIndexToHScript(entIndex):GetAbilityName()
+			--print(ability)
+			if ability == "troll_cannibal_scalping_cry" or
+			ability == "troll_cannibal_behead" or
+			ability == "troll_cannibal_bloodboil" or
+			ability == "troll_cannibal_soul_feast" or
+			ability == "enfos_attribute_bonus" then
+				--print(die)
+			else
+				CEnfosGameMode:SendErrorMessage(first_unit:GetPlayerID(), "#dota_hud_error_ability_cant_upgrade_at_max")
+				return false
+			end
+		end
+	end
+	
 	return true
 end
 
@@ -3739,39 +3745,17 @@ function CEnfosGameMode:OnEntityKilled( event )
 		end
 
 		killedUnit:SetBuybackGoldLimitTime(0)
-		if cannibalIndex ~= nil then
-			print("Index exists")
-			local soulDrain = cannibalIndex:FindAbilityByName("troll_cannibal_soul_feast")
-			local soulDrainLevel = soulDrain:GetLevel()
-			if soulDrainLevel > 0 and soulDrain:IsCooldownReady() and killedUnit:GetTeamNumber() ~= cannibalIndex:GetTeamNumber() then
-				if killedUnit:GetUnitName() == "npc_dota_hero_troll_cannibal" then -- this should never happen, but if it does, things go wrong
-					return
-				else
-					print("Stealing an ult")
-					local killedUnitUltimate = killedUnit:GetAbilityByIndex(3):GetAbilityName()
-					print(killedUnitUltimate)
-					if killedUnitUltimate == "moon_mage_moongate" then
-						killedUnitUltimate = "moon_mage_burn" -- I'm sure there's a nicer way to do this
-					end
-					cannibalIndex.stolenUltimate = killedUnitUltimate
-					soulDrain:StartCooldown(65535)
-					if cannibalIndex:HasAbility(killedUnitUltimate) == false then
-						cannibalIndex:AddAbility(killedUnitUltimate)
-					end
-					cannibalIndex:FindAbilityByName(killedUnitUltimate):SetLevel(soulDrainLevel)
-					cannibalIndex:SwapAbilities("troll_cannibal_soul_feast", killedUnitUltimate, false, true)
-					soulDrain:ApplyDataDrivenModifier(cannibalIndex, cannibalIndex, "modifier_soul_feast_passive_timer", {duration = 20})
-					cannibalIndex.passiveAbility = killedUnitUltimate
-					if killedUnit:GetUnitName() == "npc_dota_hero_luna" then
-						cannibalIndex:AddAbility("generic_focus_moonbeam")
-						cannibalIndex:FindAbilityByName("generic_focus_moonbeam"):SetLevel(1)
-						cannibalIndex:SwapAbilities("troll_cannibal_soul_drain", "generic_focus_moonbeam", false, true)
-					end
-					if killedUnitUltimate == "sniper_rapid_reload" or killedUnitUltimate == "thief_venom" then
-						soulDrain:ApplyDataDrivenModifier(cannibalIndex, cannibalIndex, "modifier_soul_feast_passive_timer", {duration = 20})
-						cannibalIndex.passiveAbility = killedUnitUltimate
-					end
-				end
+		for i=0, PlayerResource:GetPlayerCount() do
+			if PlayerResource:GetSelectedHeroName(i) == "npc_dota_hero_troll_warlord" then
+				print("aluminium can")
+				local caster = PlayerResource:GetSelectedHeroEntity(i)
+				local name = killedUnit:GetUnitName()
+				if name == "npc_dota_hero_troll_warlord" then return nil end
+				if not killedUnit:IsRealHero() then return nil end
+				if caster:IsIllusion() then return nil end
+				if killedUnit:IsIllusion() then return nil end
+				
+				caster:FindModifierByName("modifier_soul_feast_lua"):TrollUltSteal(killedUnit)
 			end
 		end
 	end
@@ -4229,11 +4213,6 @@ function RepickHero( PuttingThisHereBecauseIForgotTheseNeedTwoOfThese , event )
 		print("RANDOM SMALL: "..heroName)
 	end
 	print("Hero picked: "..heroName)
-	
-	--remove cannibal index
-	if cannibalIndex ~= nil then
-		cannibalIndex = nil
-	end
 	
 	--remove active starlight sphere
 	if player.sphere ~= nil and player.sphere:IsNull() == false then

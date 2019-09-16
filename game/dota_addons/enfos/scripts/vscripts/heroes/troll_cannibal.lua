@@ -52,7 +52,7 @@ function bloodboil(keys)
 	local damage = ability:GetLevelSpecialValueFor("health_drain", ability:GetLevel() - 1) / 10 -- ticks 10 times per second
 	DealDamage(caster, caster, damage, DAMAGE_TYPE_PURE, 0)
 end
-
+--[[
 function soul_feast_check(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -88,7 +88,7 @@ function soul_feast_passive_check(keys)
 	ability:EndCooldown()
 	--caster:RemoveAbility(caster.passiveAbility)
 	caster.stolenUltimate = nil
-end
+end]]
 		
 		
 		

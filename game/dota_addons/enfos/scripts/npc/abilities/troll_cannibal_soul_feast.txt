@@ -5,43 +5,13 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"						"ability_datadriven"
+	"BaseClass"						"ability_lua"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityTextureName"			"rubick_spell_steal"
 	"LevelsBetweenUpgrades"		"5"
 	"RequiredLevel"			"10"
 	"MaxLevel"						"10"
-	"Modifiers"
-	{
-		"modifier_soul_feast_thinker"
-		{
-			"ThinkInterval"			"0.1"
-			"Passive"				"1"
-			"IsHidden"				"1"
-			"IsPurgable"			"0"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/troll_cannibal.lua"
-					"Function"		"soul_feast_check"
-				}
-			}
-		}	
-		"modifier_soul_feast_passive_timer"
-		{
-			"IsPurgable"			"0"
-			"Duration"				"%passive_spell_duration"
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/troll_cannibal.lua"
-					"Function"		"soul_feast_passive_check"
-				}
-			}
-		}
-	}	
+	"ScriptFile"						"abilities/troll_cannibal/troll_cannibal_soul_feast.lua"
 	"AbilitySpecial"
 	{
 		"01"
