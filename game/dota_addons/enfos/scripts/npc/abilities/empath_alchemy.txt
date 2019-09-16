@@ -38,6 +38,16 @@
 		{
 			"ScriptFile"	"heroes/empath.lua"
 			"Function"		"Alchemy"
+			"level"			"%levelsforscript"
+		}
+	}
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"levelsforscript"	"1 2 3 4 5 6 7 8 9 10"
 		}
 	}
 }

@@ -119,8 +119,9 @@ end
 
 function Alchemy(keys)
 	local caster = keys.caster
-	local ability =  caster:FindAbilityByName("empath_alchemy")
-    local level = ability:GetLevel()
+	--local ability =  caster:FindAbilityByName("empath_alchemy")
+    --local level = ability:GetLevel()
+	local level = keys.level
 	--Alchemist(ability:GetLevel() , caster)
 	local DropInfo = Enfos.DropTable["alchemy_"..level]
     if DropInfo then
