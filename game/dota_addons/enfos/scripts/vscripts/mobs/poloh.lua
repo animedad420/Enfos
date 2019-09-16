@@ -31,7 +31,8 @@ function PolohThink()
 			if #units > 0 then
 				for i=1,#units do
 					if not units[i]:IsAttackImmune() then
-						thisEntity:SetForceAttackTarget(units[i])
+						--thisEntity:SetForceAttackTarget(units[i])
+						ExecuteOrderFromTable({ UnitIndex = thisEntity:entindex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_TARGET , TargetIndex = units[i]:entindex(), Queue = false})
 						break
 					end
 				end
@@ -42,10 +43,10 @@ function PolohThink()
 end
 
 
-function remove_invisiblity( event )
+--[[function remove_invisiblity( event )
  event.caster:RemoveModifierByName("modifier_invisible")
 end
 
 function apply_invisibility( event )
   event.caster:AddNewModifier(event.caster, event.ability, "modifier_invisible", {duration = -1}) 
-end
+end]]
