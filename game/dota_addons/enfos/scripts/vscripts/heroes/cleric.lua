@@ -64,7 +64,10 @@ function AesrelaEverildStart(keys)
 	local caster = keys.caster
 	caster:AddAbility("cleric_aesrela_everild_proxy")
 end
-function AesrelaEverildEmd(keys)
+function AesrelaEverildEnd(keys)
 	local caster = keys.caster
 	caster:RemoveAbility("cleric_aesrela_everild_proxy")
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		caster:FindModifierByName("modifier_soul_feast_lua"):ResetTrollUlt(true)
+	end
 end
