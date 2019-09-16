@@ -3755,7 +3755,9 @@ function CEnfosGameMode:OnEntityKilled( event )
 				if caster:IsIllusion() then return nil end
 				if killedUnit:IsIllusion() then return nil end
 				
-				caster:FindModifierByName("modifier_soul_feast_lua"):TrollUltSteal(killedUnit)
+				if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+					caster:FindModifierByName("modifier_soul_feast_lua"):TrollUltSteal(killedUnit)
+				end
 			end
 		end
 	end

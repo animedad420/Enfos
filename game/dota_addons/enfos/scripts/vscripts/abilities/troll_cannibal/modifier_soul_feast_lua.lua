@@ -38,7 +38,7 @@ end
 	end
 end
 
-function modifier_soul_feast_lua:OnHeroKilled(keys)
+function modifier_soul_feast_lua:OnHeroKilled(keys) NONE OF THIS WORKS! HOORAY!!!
 	print("henlo")
 	if not IsServer() then return nil end
 	
@@ -58,12 +58,7 @@ function modifier_soul_feast_lua:OnAbilityExecuted(keys)
 	
 	if keys.unit == self:GetParent() then
 		if keys.ability:GetAbilityIndex() == 3 then
-			Timers:CreateTimer(DoUniqueString("removeSoulFeastUlt"), {
-				endTime = 0.05,
-				callback = function()
-					self:ResetTrollUlt()
-				end
-			})
+			self:ResetTrollUlt(false)
 		end
 	end
 end
@@ -75,14 +70,14 @@ function modifier_soul_feast_lua:TrollUltSteal(victim)
 	local target = victim
 	local name = target:GetUnitName()
 	
-	local ammo = target:GetAbilityByIndex(3)
+	local spell = target:GetAbilityByIndex(3)
 	if name == "npc_dota_hero_juggernaut" or name == "npc_dota_hero_terrorblade" 
-	or name == "npc_dota_hero_beastmaster" or name == "npc_dota_hero_spirit_breaker" then ammo = target:GetAbilityByIndex(2) end
-	if name == "npc_dota_hero_silencer" then ammo = target:GetAbilityByIndex(0) end
-	local ammoLevel = caster:FindAbilityByName("troll_cannibal_soul_feast"):GetLevel()
+	or name == "npc_dota_hero_beastmaster" or name == "npc_dota_hero_spirit_breaker" then spell = target:GetAbilityByIndex(2) end
+	if name == "npc_dota_hero_silencer" then spell = target:GetAbilityByIndex(0) end
+	local spellLevel = caster:FindAbilityByName("troll_cannibal_soul_feast"):GetLevel()
 	caster:RemoveAbility("troll_cannibal_soul_feast")
-	caster:AddAbility(ammo:GetAbilityName())
-	caster:FindAbilityByName(ammo:GetAbilityName()):SetLevel(ammoLevel)
+	caster:AddAbility(spell:GetAbilityName())
+	caster:FindAbilityByName(spell:GetAbilityName()):SetLevel(spellLevel)
 	if name == "npc_dota_hero_luna" or name == "npc_dota_hero_silencer" then
 		caster:RemoveAbility("troll_cannibal_soul_drain")
 		caster:AddAbility("generic_focus_moonbeam")
@@ -93,15 +88,18 @@ function modifier_soul_feast_lua:TrollUltSteal(victim)
 	end
 end
 
-function modifier_soul_feast_lua:ResetTrollUlt()
+function modifier_soul_feast_lua:ResetTrollUlt(forcereset)
 	if not IsServer() then return nil end
 	
 	local caster = self:GetParent()
-	local ammo = caster:GetAbilityByIndex(3)
-	local ammoLevel = ammo:GetLevel()
-	caster:RemoveAbility(ammo:GetAbilityName())
+	local spell = caster:GetAbilityByIndex(3)
+	local spellLevel = spell:GetLevel()
+	if spell:GetChannelTime() > 0 then
+		if not forcereset then return nil end
+	end
+	caster:RemoveAbility(spell:GetAbilityName())
 	caster:AddAbility("troll_cannibal_soul_feast")
-	caster:FindAbilityByName("troll_cannibal_soul_feast"):SetLevel(ammoLevel)
+	caster:FindAbilityByName("troll_cannibal_soul_feast"):SetLevel(spellLevel)
 	if caster:FindAbilityByName("generic_focus_moonbeam") ~= nil then
 		caster:RemoveAbility("generic_focus_moonbeam")
 		caster:AddAbility("troll_cannibal_soul_drain")

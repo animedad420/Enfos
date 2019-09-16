@@ -10,5 +10,5 @@ end
 
 function modifier_soul_feast_passive_timer:OnDestroy()
 	local fuck = self:GetParent():FindModifierByName("modifier_soul_feast_lua")
-	fuck:ResetTrollUlt()
+	fuck:ResetTrollUlt(false)
 end
