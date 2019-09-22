@@ -37,7 +37,16 @@
 			"Target"				"POINT"
 		}
 	}
-	"OnChannelFinish"
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"scripts/vscripts/heroes/warrior_mage.lua"
+			"Function"				"fire_rain_end"
+		}
+
+	}
+	"OnChannelInterrupted"
 	{
 		"RunScript"
 		{

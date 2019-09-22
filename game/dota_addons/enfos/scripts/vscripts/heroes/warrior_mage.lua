@@ -183,4 +183,7 @@ function fire_rain_end(keys)
 		Timers:RemoveTimer("frrn"..pid)
 		--caster.blastDummy = nil
 	end
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		caster:FindModifierByName("modifier_soul_feast_lua"):ResetTrollUlt(true)
+	end
 end
