@@ -189,8 +189,16 @@ function vertigo_damage(keys)
 	local target = keys.target
 	local caster = keys.caster
 	local thisSpell = caster:GetAbilityByIndex(3)
+	if thisSpell:GetAbilityName() ~= "tempest_vertigo" then return end
 	if not target:HasModifier("modifier_tempest_vertigo_damage") then
 		--print("Target hasn't recently been damaged, damaging")
 		thisSpell:ApplyDataDrivenModifier(caster, target, "modifier_tempest_vertigo_damage", {})
+	end
+end
+
+function vertigo_end(keys)
+	local caster = keys.caster
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		caster:FindModifierByName("modifier_soul_feast_lua"):ResetTrollUlt(true)
 	end
 end

@@ -32,6 +32,22 @@
 			"aoe"					"%aoe"
 		}
 	}
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/tempest.lua"
+			"Function"		"vertigo_end"
+		}
+	}
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/tempest.lua"
+			"Function"		"vertigo_end"
+		}
+	}
 	"Modifiers"
 	{
 		"modifier_tempest_vertigo_applier"
