@@ -56,6 +56,19 @@
 			"EffectAttachType"	 "follow_origin"
 			"Target"			 "CASTER"
 		}
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/warlock.lua"
+			"Function"		"EnergyFlareEnd"
+		}
+	}
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/warlock.lua"
+			"Function"		"EnergyFlareEnd"
+		}
 	}
 
 	// Special

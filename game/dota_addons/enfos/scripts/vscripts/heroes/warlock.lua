@@ -163,3 +163,10 @@ function EnergyFlare(keys)
 	ApplyDamage({ victim = caster, attacker = caster, damage = dmg, damage_type = DAMAGE_TYPE_PURE, ability = keys.ability})
 	caster:SetMana(0)
 end
+
+function EnergyFlareEnd(keys)
+	local caster = keys.caster
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		caster:FindModifierByName("modifier_soul_feast_lua"):ResetTrollUlt(true)
+	end
+end
