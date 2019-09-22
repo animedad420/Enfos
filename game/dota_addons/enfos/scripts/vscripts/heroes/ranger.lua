@@ -148,7 +148,7 @@ end
 function SummonMeraudsCompanion(keys)
 -- vars
 	local caster = keys.caster
-	local thisSpellLevel = caster:FindAbilityByName("ranger_merauds_companion"):GetLevel()
+	--local thisSpellLevel = caster:FindAbilityByName("ranger_merauds_companion"):GetLevel()
 	local findUnits = Entities:FindAllByClassnameWithin("npc_dota_creature", caster:GetAbsOrigin(), 1000)
 -- logic
 	--print("Spawning unit")
