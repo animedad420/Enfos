@@ -331,24 +331,35 @@ end
 function armageddon(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		if caster:FindAbilityByName("shadow_priest_armageddon_proxy") ~= nil then ability = caster:FindAbilityByName("shadow_priest_armageddon_proxy")
+		else
+			ability = caster:AddAbility("shadow_priest_armageddon_proxy")
+			ability:SetLevel(keys.level)
+		end
+	end
 	local damage = ability:GetLevelSpecialValueFor("damage", ability:GetLevel() - 1)
 	local impactDelay = ability:GetLevelSpecialValueFor("delay", ability:GetLevel() - 1)
 	local impactRadius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1)
 	local searchRadius = ability:GetSpecialValueFor("meteor_fall_area")
-	local shadowArts = caster:FindAbilityByName("shadow_priest_shadow_art_mastery")
-	local shadowArtsLevel = shadowArts:GetLevel() - 1
-	local shadowArtsChance = shadowArts:GetLevelSpecialValueFor("chance", shadowArtsLevel)
 	local randomPoint = nil
-	local randomNumber = math.random(1,100)
-	if shadowArtsChance > randomNumber then
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, searchRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_CREEP, 0, 0, false)
-		if units[1] == nil then -- end if no units found
-			randomPoint = caster:GetAbsOrigin() + (RandomVector(searchRadius) * RandomFloat(0,1))
-		else
-			while #units > 1 do -- remove random units from the table until there's only one left
-				table.remove(units, math.random(#units))
+	if caster:FindAbilityByName("shadow_priest_shadow_art_mastery") ~= nil then
+		local shadowArts = caster:FindAbilityByName("shadow_priest_shadow_art_mastery")
+		local shadowArtsLevel = shadowArts:GetLevel() - 1
+		local shadowArtsChance = shadowArts:GetLevelSpecialValueFor("chance", shadowArtsLevel)
+		local randomNumber = math.random(1,100)
+		if shadowArtsChance > randomNumber then
+			local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, searchRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_CREEP, 0, 0, false)
+			if units[1] == nil then -- end if no units found
+				randomPoint = caster:GetAbsOrigin() + (RandomVector(searchRadius) * RandomFloat(0,1))
+			else
+				while #units > 1 do -- remove random units from the table until there's only one left
+					table.remove(units, math.random(#units))
+				end
+				randomPoint = units[1]:GetAbsOrigin() -- not so random I guess
 			end
-			randomPoint = units[1]:GetAbsOrigin() -- not so random I guess
+		else
+			randomPoint = caster:GetAbsOrigin() + (RandomVector(searchRadius) * RandomFloat(0,1))
 		end
 	else
 		randomPoint = caster:GetAbsOrigin() + (RandomVector(searchRadius) * RandomFloat(0,1))
@@ -376,27 +387,10 @@ function armageddon(keys)
 	})
 end
 
-
-						-- "FireEffect"
-						-- {
-							-- "EffectName"        "particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
-							-- "EffectAttachType"  "follow_origin"
-							-- "Target"            "TARGET"
-
-							-- "ControlPoints"
-							-- {
-								-- "01"	"%area_of_effect 0 0"
-							-- }
-						-- }
-
-
-
-
-
-
-
-
-
-
-
-
+function armageddon_end(keys)
+	if keys.caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		if not keys.caster:FindModifierByName("modifier_armageddon") ~= nil then
+			keys.caster:RemoveAbility("shadow_priest_armageddon_proxy")
+		end
+	end
+end

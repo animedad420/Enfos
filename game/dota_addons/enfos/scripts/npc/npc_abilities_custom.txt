@@ -11213,6 +11213,7 @@
 		{
 			"modifier_armageddon"
 			{
+				"TextureName"	"invoker_sun_strike"
 				"IsPurgable"			"0"
 				"Duration"				"%duration"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
@@ -11223,6 +11224,107 @@
 					{
 						"ScriptFile"			"scripts/vscripts/heroes/shadow_priest.lua"
 						"Function"				"armageddon"
+						"level"					"%soulfeastlevel"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/shadow_priest.lua"
+						"Function"				"armageddon_end"
+					}
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_duration"			"5"
+			}			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200 220 240 260 280 300 320 340 360 380"
+			}		
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"800 1056 1393 1893 2428 3205 4231 5586 7373 9733"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval"				"0.8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"meteor_fall_area"		"800"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"0.69 0.63 0.57 0.51 0.45 0.39 0.33 0.27 0.21 0.15"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soulfeastlevel"		"1 2 3 4 5 6 7 8 9 10"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Shadow Priest: Armageddon: Proxy: For Troll
+	//=================================================================================================================
+	"shadow_priest_armageddon_proxy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"invoker_sun_strike"
+		"LevelsBetweenUpgrades"			"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"10"
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
+		}
+		"Modifiers"
+		{
+			"modifier_armageddon"
+			{
+				"TextureName"	"invoker_sun_strike"
+				"IsPurgable"			"0"
+				"Duration"				"%duration"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"ThinkInterval"			"%interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/shadow_priest.lua"
+						"Function"				"armageddon"
+						"level"					"%soulfeastlevel"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/shadow_priest.lua"
+						"Function"				"armageddon_end"
 					}
 				}
 			}
