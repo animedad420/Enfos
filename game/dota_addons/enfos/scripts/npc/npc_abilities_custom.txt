@@ -11103,6 +11103,7 @@
 				"Function"				"SpiritualSwarmCast"
 				"damage"				"%damage"
 				"jumps"					"%jumps"
+				"level"					"%feastlevel"
 			}
 			"FireSound"
 			{
@@ -11178,6 +11179,104 @@
 				"var_type"				"FIELD_FLOAT"
 				"damage_over_time"		"27.5 41.2 61.8 92.8 139.2 208.8 313.2 468.9 504.7 1057.1"
 			}			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"feastlevel"			"1 2 3 4 5 6 7 8 9 10"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Spiritual Swarm Proxy For Troll Steal
+	//=================================================================================================================
+	"revenant_spiritual_swarm_proxy"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"weaver_geminate_attack"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"MaxLevel"					"10"
+		"LevelsBetweenUpgrades"			"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		"Precache"
+		{
+			"particle_folder"			"particles/units/heroes/hero_weaver/"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
+		}
+		"OnProjectileHitUnit"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_revenant_spiritual_swarm_debuff"
+				"Target"				"TARGET"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_revenant_spiritual_swarm_debuff"
+			{
+				"ThinkInterval"		"0.1"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_Weaver.SwarmAttach"
+					}
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_weaver/weaver_swarm_infected_debuff.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+					}
+				}
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage_over_time"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/revenant.lua"
+						"Function"		"SpiritualSwarmJump"
+					}
+				}
+			}			
+		}				
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"275 412 618 928 1392 2088 3132 4689 5047 10571" // what the fuck is this damage scaling?
+			}			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jumps"					"31 32 33 34 35 36 37 38 39 40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"-66"		
+			}
+			"04" //don't add this one to addon_english. it's just for the modifier.
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_over_time"		"27.5 41.2 61.8 92.8 139.2 208.8 313.2 468.9 504.7 1057.1"
+			}			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"feastlevel"			"1 2 3 4 5 6 7 8 9 10"
+			}
 		}
 	}
 	//=================================================================================================================

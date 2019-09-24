@@ -114,6 +114,15 @@ end
 function SpiritualSwarmCast(keys)
 -- vars
 	local caster = keys.caster
+	local ability = keys.ability
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		if caster:FindAbilityByName("revenant_spiritual_swarm_proxy") ~= nil then
+			ability = caster:FindAbilityByName("revenant_spiritual_swarm_proxy")
+		else
+			ability = caster:AddAbility("revenant_spiritual_swarm_proxy")
+			ability:SetLevel(keys.level)
+		end
+	end
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, 800, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_CREEP, 0, 1, false) -- guessing on radius
 	Enfos.spiritualSwarmJumps = keys.jumps -- works a bit poorly with cooldown refresh. figure something out?
 	for i=1,4 do
@@ -122,7 +131,7 @@ function SpiritualSwarmCast(keys)
 		end
 		local info = {
 			EffectName = "particles/units/heroes/hero_weaver/weaver_base_attack.vpcf",
-			Ability = caster:GetAbilityByIndex(3),
+			Ability = ability,
 			vSpawnOrigin = caster:GetAbsOrigin(),
 			fDistance = 800,
 			fStartRadius = 125,
@@ -149,6 +158,9 @@ function SpiritualSwarmJump(keys)
 	print (Enfos.spiritualSwarmJumps)
 -- make sure we have enough jumps left
 	if Enfos.spiritualSwarmJumps < 1 then
+		if caster:FindAbilityByName("revenant_spiritual_swarm_proxy") ~= nil then
+			caster:RemoveAbility("revenant_spiritual_swarm_proxy")
+		end
 		return
 	end
 -- find units and put them into a table if they're valid
@@ -165,11 +177,17 @@ function SpiritualSwarmJump(keys)
 	if validTargets[1] == nil then
 		return
 	end
+	local ability = caster:GetAbilityByIndex(3)
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		if caster:FindAbilityByName("revenant_spiritual_swarm_proxy") ~= nil then
+			ability = caster:FindAbilityByName("revenant_spiritual_swarm_proxy")
+		end
+	end
 -- select a new random target
 	local bounceTarget = validTargets[math.random(1,#validTargets)]
 	local info = {
 		EffectName = "particles/units/heroes/hero_weaver/weaver_base_attack.vpcf",
-		Ability = caster:GetAbilityByIndex(3),
+		Ability = ability,
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		fDistance = 800,
 		fStartRadius = 125,

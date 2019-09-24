@@ -1,37 +1,20 @@
 //=================================================================================================================
-// Revenant: Spiritual Swarm
+// Spiritual Swarm Proxy For Troll Steal
 //=================================================================================================================
-"revenant_spiritual_swarm"
+"revenant_spiritual_swarm_proxy"
 {
 	"BaseClass"						"ability_datadriven"
 	"AbilityTextureName"			"weaver_geminate_attack"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	"RequiredLevel"					"10"
-	"LevelsBetweenUpgrades"			"5"
-	"MaxLevel"						"10"
-	"AbilityCastPoint"				"0.5"
-	"AbilityCooldown"				"110"
-	"AbilityManaCost"				"100 135 173 215 262 313 370 432 500 575"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"MaxLevel"					"10"
+	"LevelsBetweenUpgrades"			"0"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
 	"Precache"
 	{
 		"particle_folder"			"particles/units/heroes/hero_weaver/"
 		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
-	}
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"			"scripts/vscripts/heroes/revenant.lua"
-			"Function"				"SpiritualSwarmCast"
-			"damage"				"%damage"
-			"jumps"					"%jumps"
-			"level"					"%feastlevel"
-		}
-		"FireSound"
-		{
-			"Target"				"CASTER"
-			"EffectName"			"Hero_Weaver.SwarmCast"
-		}
 	}
 	"OnProjectileHitUnit"
 	{
