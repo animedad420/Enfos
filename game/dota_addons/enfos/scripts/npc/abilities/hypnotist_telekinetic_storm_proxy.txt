@@ -1,44 +1,24 @@
 //=================================================================================================================
-// Hypnotist: Telekinetic Storm (by Noya - https://github.com/Pizzalol/SpellLibrary/blob/SpellLibrary/game/dota_addons/spelllibrary/scripts/npc/abilities/death_prophet_TelekineticStorm_datadriven.txt)
+// Telekinetic Storm proxy that works with troll ult wowie kazowie! sick of doing this
 //=================================================================================================================
-"hypnotist_telekinetic_storm"
+"hypnotist_telekinetic_storm_proxy"
 {
 	"BaseClass"						"ability_datadriven"
 	"AbilityTextureName"			"bounty_hunter_shuriken_toss"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
-	"RequiredLevel"					"10"
-	"LevelsBetweenUpgrades"			"5"
-	"MaxLevel"						"10"
-	"AbilityCastPoint"				"0.5"
+	"MaxLevel"					"10"
+	"LevelsBetweenUpgrades"			"0"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
 	"AbilityCooldown"				"120"
 	"AbilityManaCost"				"200 220 240 260 280 300 320 340 360 380"
 	"Precache"
 	{
 	  	"particle"    "particles/hero_hypnotist/"
 		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shredder.vsndevts"
-	}
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"scripts/vscripts/heroes/hypnotist.lua"
-			"Function"		"TelekineticStormDeath"
-		}
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_telekinetic_storm"
-			"Target" 		"CASTER"
-		}
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_telekinetic_storm"
-			"Target" 		"CASTER"
-			"Duration"		"%duration"
-		}
 	}
 	"Modifiers"
 	{

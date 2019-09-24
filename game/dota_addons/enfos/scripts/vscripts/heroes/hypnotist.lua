@@ -220,6 +220,13 @@ function TelekineticStormStart(keys)
 -- vars
 	local caster = keys.caster
 	local ability = keys.ability
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		if caster:FindAbilityByName("hypnotist_telekinetic_storm_proxy") ~= nil then
+			caster:RemoveAbility("hypnotist_telekinetic_storm_proxy")
+		end
+		ability = caster:AddAbility("hypnotist_telekinetic_storm_proxy")
+		ability:SetLevel(keys.level)
+	end
 	local playerID = caster:GetPlayerID()
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 ) or 1000
 	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 ) or 30
@@ -260,6 +267,12 @@ function TelekineticStormPhysics( keys )
 	local caster = keys.caster
 	local unit = keys.target
 	local ability = keys.ability
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		if caster:FindAbilityByName("hypnotist_telekinetic_storm_proxy") ~= nil then
+			ability = caster:FindAbilityByName("hypnotist_telekinetic_storm_proxy")
+		end
+	end
+	
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 ) or 1000
 	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 ) or 30
 	local spirit_speed = ability:GetLevelSpecialValueFor( "spirit_speed", ability:GetLevel() - 1 ) or 500
@@ -549,6 +562,9 @@ function TelekineticStormEnd( keys )
 
 	-- Reset the last_targeted
 	caster.last_targeted = nil
+	if caster:FindAbilityByName("hypnotist_telekinetic_storm_proxy") ~= nil then
+		caster:RemoveAbility("hypnotist_telekinetic_storm_proxy")
+	end
 end
 
 -- Updates the last_targeted enemy, to focus the ghosts on it.
@@ -575,6 +591,9 @@ function TelekineticStormDeath( keys )
 	      --  unit:ForceKill(false)
 			unit:Destroy()
     	end
+	end
+	if caster:FindAbilityByName("hypnotist_telekinetic_storm_proxy") ~= nil then
+		caster:RemoveAbility("hypnotist_telekinetic_storm_proxy")
 	end
 end
 
