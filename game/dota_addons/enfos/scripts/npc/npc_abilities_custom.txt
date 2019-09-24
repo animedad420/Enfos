@@ -9342,6 +9342,12 @@
 				"Target"					"CASTER"
 				"EffectName"				"Hero_Magnataur.Empower.Target"
 			}
+			"RunScript"			
+			{
+				"ScriptFile"		"scripts/vscripts/heroes/magic_infuser.lua"
+				"Function"			"BracerTrollCheck"
+				"level"				"%trolllevel"
+			}
 		}
 		"OnProjectileHitUnit"
 		{
@@ -9357,6 +9363,7 @@
 		{
 			"modifier_empower_bracers"
 			{
+				"TextureName"	"tusk_walrus_punch"
 				"IsPurgable"	"0"
 				"Duration"	"%duration"
 				"EffectName"	"particles/units/heroes/hero_magnataur/magnataur_empower.vpcf"
@@ -9367,6 +9374,114 @@
 					{
 						"ScriptFile"		"scripts/vscripts/heroes/magic_infuser.lua"
 						"Function"			"BracerShot"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"			
+					{
+						"ScriptFile"		"scripts/vscripts/heroes/magic_infuser.lua"
+						"Function"			"BracerTrollEnd"
+					}
+				}
+			}
+			
+			"modifier_empower_bracers_proc"
+			{
+				"IsHidden"	"1"
+				"IsPurgable"	"0"
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_empower_bracers_proc"
+						"Target"			"CASTER"	
+					}
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"damage"		"200 290 420.5 609.7 884.1 1281.6 1858.8 2695.3 3908.1 5666.8"
+			}	
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"250"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"25"
+			}		
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"trolllevel"	"1 2 3 4 5 6 7 8 9 10"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Empower Bracers Proxy (for troll ult)
+	//=================================================================================================================
+	"ogre_magi_enfos_empower_bracers_proxy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName" 			"tusk_walrus_punch"
+		"MaxLevel"					"10"
+		"LevelsBetweenUpgrades"			"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+	
+		"AbilityManaCost"			"65 77 95 119 149 185 227 275 329 389"
+		"AbilityCooldown"			"120"
+	
+		"Precache"
+		{
+			"particle"			"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit" "0"
+			"Damage"
+			{
+				"Type" 					"DAMAGE_TYPE_MAGICAL"
+				"Damage" 				"%damage"
+				"Target" 				"TARGET"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_empower_bracers"
+			{
+				"TextureName"	"tusk_walrus_punch"
+				"IsPurgable"	"0"
+				"Duration"	"%duration"
+				"EffectName"	"particles/units/heroes/hero_magnataur/magnataur_empower.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+				"OnAttackStart"
+				{
+					"RunScript"			
+					{
+						"ScriptFile"		"scripts/vscripts/heroes/magic_infuser.lua"
+						"Function"			"BracerShot"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"			
+					{
+						"ScriptFile"		"scripts/vscripts/heroes/magic_infuser.lua"
+						"Function"			"BracerTrollEnd"
 					}
 				}
 			}

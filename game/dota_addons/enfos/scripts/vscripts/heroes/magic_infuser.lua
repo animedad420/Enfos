@@ -48,6 +48,9 @@ end
 function BracerShot(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		ability = caster:FindAbilityByName("ogre_magi_enfos_empower_bracers_proxy")
+	end
 	local velocity = caster:GetForwardVector() * 1800
 	local spawnpoint = caster:GetAbsOrigin()
 	if caster:HasModifier("modifier_empower_bracers_proc") then
@@ -59,7 +62,7 @@ function BracerShot(keys)
 		callback = function()
 			local shot = 
 			{
-				Ability = keys.ability,
+				Ability = ability,
 				EffectName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
 				vSpawnOrigin = spawnpoint,
 				fDistance = 500,
@@ -83,4 +86,26 @@ function BracerShot(keys)
 		end
 	})					
 	
+end
+
+function BracerTrollCheck(keys)
+	if keys.caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		if not keys.caster:FindAbilityByName("ogre_magi_enfos_empower_bracers_proxy") ~= nil then
+			local ab = keys.caster:AddAbility("ogre_magi_enfos_empower_bracers_proxy")
+			ab:SetLevel(keys.level)
+		end
+	end
+end
+
+function BracerTrollEnd(keys)
+	Timers:CreateTimer(DoUniqueString("byeBitch"), {
+	endTime = 1,
+	callback = function()
+		if keys.caster:FindAbilityByName("ogre_magi_enfos_empower_bracers_proxy") ~= nil then
+			if not keys.caster:FindModifierByName("modifier_empower_bracers") ~= nil then
+				keys.caster:RemoveAbility("ogre_magi_enfos_empower_bracers_proxy")
+			end
+		end
+	end
+	})
 end

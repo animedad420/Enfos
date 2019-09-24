@@ -1,16 +1,18 @@
 //=================================================================================================================
-// Empower Bracers
+// Empower Bracers Proxy (for troll ult)
 //=================================================================================================================
-"ogre_magi_enfos_empower_bracers"
+"ogre_magi_enfos_empower_bracers_proxy"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	"BaseClass" 					"ability_datadriven"
 	"AbilityTextureName" 			"tusk_walrus_punch"
 	"MaxLevel"					"10"
-	"RequiredLevel"				"10"
-	"LevelsBetweenUpgrades"		"5"
+	"LevelsBetweenUpgrades"			"0"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
 
 	"AbilityManaCost"			"65 77 95 119 149 185 227 275 329 389"
 	"AbilityCooldown"			"120"
@@ -19,25 +21,6 @@
 	{
 		"particle"			"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
-	}
-	"OnSpellStart"
-	{
-		"ApplyModifier"
-		{
-			"Target" 			"CASTER"
-			"ModifierName"		"modifier_empower_bracers"
-		}
-		"FireSound"
-		{
-			"Target"					"CASTER"
-			"EffectName"				"Hero_Magnataur.Empower.Target"
-		}
-		"RunScript"			
-		{
-			"ScriptFile"		"scripts/vscripts/heroes/magic_infuser.lua"
-			"Function"			"BracerTrollCheck"
-			"level"				"%trolllevel"
-		}
 	}
 	"OnProjectileHitUnit"
 	{
@@ -108,10 +91,5 @@
 			"var_type"		"FIELD_INTEGER"
 			"duration"		"25"
 		}		
-		"04"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"trolllevel"	"1 2 3 4 5 6 7 8 9 10"
-		}
 	}
 }
