@@ -151,6 +151,12 @@ function CaravanBomb(keys)
 	local spawnPoint = casterPos + ( radius * backwardVec )
 	local velocityVec = Vector( forwardVec.x, forwardVec.y, 0 )
 	
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		--GetAbilityName()
+		ability = caster:AddAbility("trader_caravan_bomb_proxy")
+		ability:SetLevel(keys.level)
+	end
+	
 	local projectileTable = {
 		Ability = ability,
 		EffectName = "particles/hero_trader/trader_caravan_bomb.vpcf",
@@ -178,4 +184,7 @@ function CaravanExplosion(keys)
 	--ParticleManager:SetParticleControl(particle, 0, randomPoint) 
 	ParticleManager:SetParticleControl(particle, 2, Vector(2,2,2))
 	DelayDestroy(blastDummy, 1)
+	if caster:FindModifierByName("modifier_soul_feast_lua") ~= nil then
+		keys.ability:RemoveSelf()
+	end
 end

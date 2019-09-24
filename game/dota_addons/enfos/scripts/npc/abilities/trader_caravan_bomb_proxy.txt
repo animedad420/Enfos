@@ -1,37 +1,22 @@
 //=================================================================================================================
-// Trader: Caravan Bomb
+// Caravan Bomb Proxy (For Troll Steal)
 //=================================================================================================================
-"trader_caravan_bomb"
+"trader_caravan_bomb_proxy"
 {
 	"BaseClass"						"ability_datadriven"
 	"AbilityTextureName"			"techies_suicide"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-	"RequiredLevel"					"10"
-	"LevelsBetweenUpgrades"			"5"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"LevelsBetweenUpgrades"			"0"
 	"MaxLevel"						"10"
-	"AbilityCastRange"				"1000"
-	"AbilityCooldown"				"150"
-	"AbilityManaCost"				"200 220 240 260 280 300 320 340 360 380"
-	"AbilityCastAnimation"			"ACT_DOTA_TELEPORT"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
 
 	"Precache"
 	{
 		"particle"			"particles/hero_trader/trader_caravan_bomb_explosion.vpcf"
 		"particle"			"particles/hero_trader/trader_caravan_bomb.vpcf"
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
-	}
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"			"scripts/vscripts/heroes/trader.lua"
-			"Function"				"CaravanBomb"
-			"Target"				"POINT"
-			"radius"				"%radius"
-			"collision_radius"		"%collision_radius"
-			"cart_speed"			"%cart_speed"
-			"level"					"%levelsfortroll"
-		}
 	}
 	"OnProjectileHitUnit"
 	{
@@ -92,11 +77,6 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"cart_speed"			"160"
-		}
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"levelsfortroll"		"1 2 3 4 5 6 7 8 9 10"
 		}
 	}
 }
