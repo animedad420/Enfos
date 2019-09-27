@@ -8230,7 +8230,7 @@
 	"moon_mage_dinazen_olkar"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"nevermore_shadowraze1"
+		"AbilityTextureName"			"moon_mage_dinazen_olkar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -8241,8 +8241,9 @@
 		"AbilityManaCost"				"8 9 11 13 15 18 20 23 27 30"
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
-			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle_folder"	"particles/hero_moonmage"
 			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
 		}
 		"OnSpellStart"
@@ -8255,7 +8256,7 @@
 			"TrackingProjectile"
 			{
 				"Target"           "TARGET"
-			    "EffectName"       "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+			    "EffectName"       "particles/hero_moonmage/moon_mage_dinazen_olkar.vpcf"
 			    "Dodgeable"        "1"
 			    "ProvidesVision"   "1"
 			    "VisionRadius"     "300"
@@ -8264,12 +8265,17 @@
 			}
 			"FireSound"
 			{
-				"EffectName"		"Hero_PhantomAssassin.Dagger.Cast"
+				"EffectName"		"Hero_Pangolier.TailThump.Cast"
 				"Target"			"CASTER"
 			}
 		}
 		"OnProjectileHitUnit"
 		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Centaur.Retaliate.Target"
+				"Target"			"TARGET"
+			}
 			"Damage"
 			{
 				"Target"			"TARGET"
