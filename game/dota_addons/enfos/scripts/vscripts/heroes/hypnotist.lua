@@ -207,10 +207,10 @@ function MindShout(keys) -- warning: the sound effect for this can get a bit lou
 		Timers:RemoveTimer("moonbeam_timer" .. pid)
 		Enfos.moonbeamActive[pid] = nil
 	else
-		caster:GiveMana(keys.ability:GetManaCost(keys.ability:GetLevel() - 1))
-		keys.ability:EndCooldown()
-		print("INACTIVE MOON BEAM")
-		return
+		--caster:GiveMana(keys.ability:GetManaCost(keys.ability:GetLevel() - 1))
+		--keys.ability:EndCooldown()
+		--print("INACTIVE MOON BEAM")
+		return false
 	end
 end
 

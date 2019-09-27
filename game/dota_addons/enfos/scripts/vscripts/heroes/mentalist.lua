@@ -4,9 +4,9 @@ function Dazzle(keys)
 	local pid = caster:GetPlayerID()
 -- spell effect
 	if Enfos.moonbeamActive[pid] == nil then
-		print ("No beam!") -- ph. popup message possible?
-		caster:FindAbilityByName("mentalist_dazzle"):EndCooldown()
-		return
+		--print ("No beam!") -- ph. popup message possible?
+		--caster:FindAbilityByName("mentalist_dazzle"):EndCooldown()
+		return false
 	end
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), Enfos.moonbeamActive[pid]:GetOrigin(), caster, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_CREEP, 0, 0, false)
 	for k,v in pairs(units) do

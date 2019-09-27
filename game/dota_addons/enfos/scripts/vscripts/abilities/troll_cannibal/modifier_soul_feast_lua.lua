@@ -10,6 +10,7 @@ end
 
 function modifier_soul_feast_lua:IsPurgable() return false end
 function modifier_soul_feast_lua:RemoveOnDeath() return false end
+function modifier_soul_feast_lua:IsHidden() return true end
 
 function modifier_soul_feast_lua:OnCreated(keys)
 	local caster = self:GetParent()

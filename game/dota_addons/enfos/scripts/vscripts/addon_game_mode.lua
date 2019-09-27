@@ -2923,9 +2923,11 @@ function CEnfosGameMode:FilterExecuteOrder( filterTable )
 		local ability = EntIndexToHScript( filterTable["entindex_ability"] )
 		
 		--Handles error checking abilities
-
+		
+		local abilityName = ability:GetAbilityName()
+		
 		--Soul drain cannot be casted if Troll is already at full health
-		if ability:GetAbilityName() == "troll_cannibal_soul_drain" then
+		if abilityName == "troll_cannibal_soul_drain" then
 			if first_unit:GetHealth() >= first_unit:GetMaxHealth() then
 				--Notifications:Bottom(first_unit:GetPlayerID(), {text="Cannot be casted at full health!", duration=3, style={color="red", ["font-size"]="50px"}})
 				--EmitSoundOnClient("General.CastFail_InvalidTarget_Hero", first_unit:GetPlayerOwner())
@@ -2939,6 +2941,14 @@ function CEnfosGameMode:FilterExecuteOrder( filterTable )
 					CEnfosGameMode:SendErrorMessage(first_unit:GetPlayerOwnerID(), "No usable corpses nearby")
 					return false
 				end
+			end
+		end
+		
+		if abilityName == "moon_mage_burn" or abilityName == "mentalist_dazzle" or abilityName == "hypnotist_mind_shout" then
+			print(Enfos.moonbeamActive[first_unit:GetPlayerID()])
+			if Enfos.moonbeamActive[first_unit:GetPlayerID()] == nil then
+				CEnfosGameMode:SendErrorMessage(first_unit:GetPlayerID(), "No active moonbeam")
+				return false
 			end
 		end
 		
@@ -3415,12 +3425,13 @@ end
 
 
 function CEnfosGameMode:OnPlayerLevelledUp( event )
-	--PrintTable(event)
+	PrintTable(event)
 	--CEnfosGameMode:SendErrorMessage(event.player - 1, "Bastard")
 	local player = EntIndexToHScript(event.player)
 	if player then
 		local playerID = player:GetPlayerID()
 		local hero = player:GetAssignedHero()
+		print("heropid "..hero:GetPlayerID())
 		hero.strength = hero.strength + hero.strength_gain
 		hero.agility = hero.agility + hero.agility_gain
 		hero.intellect = hero.intellect + hero.intellect_gain
@@ -3752,6 +3763,7 @@ function CEnfosGameMode:OnEntityKilled( event )
 		end
 
 		killedUnit:SetBuybackGoldLimitTime(0)
+		
 		for i=0, PlayerResource:GetPlayerCount() do
 			if PlayerResource:GetSelectedHeroName(i) == "npc_dota_hero_troll_warlord" then
 				print("aluminium can")

@@ -114,10 +114,10 @@ function Burn(keys)
 	local pid = caster:GetPlayerID()
 	--local partDummy = FastDummy(AdjustZ(Enfos.moonbeamActive[pid]:GetAbsOrigin(), 128), caster:GetTeamNumber())
 	if Enfos.moonbeamActive[pid] == nil then
-		caster:GiveMana(keys.ability:GetManaCost(keys.ability:GetLevel() - 1))
-		keys.ability:EndCooldown()
-		print("INACTIVE MOON BEAM")
-		return
+		--caster:GiveMana(keys.ability:GetManaCost(keys.ability:GetLevel() - 1))
+		--keys.ability:EndCooldown()
+		--print("INACTIVE MOON BEAM")
+		return false
 	end
 	local beamLoc = Enfos.moonbeamActive[pid]:GetAbsOrigin()
 	if Enfos.moonbeamActive[pid] ~= nil then

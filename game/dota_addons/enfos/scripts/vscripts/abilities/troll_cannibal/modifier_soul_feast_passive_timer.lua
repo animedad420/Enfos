@@ -9,6 +9,7 @@ function modifier_soul_feast_passive_timer:GetTexture()
 end
 
 function modifier_soul_feast_passive_timer:OnDestroy()
-	local fuck = self:GetParent():FindModifierByName("modifier_soul_feast_lua")
-	fuck:ResetTrollUlt(false)
+	local fuck = self:GetParent()
+	local shit = fuck:FindModifierByName("modifier_soul_feast_lua")
+	shit:ResetTrollUlt(false)
 end

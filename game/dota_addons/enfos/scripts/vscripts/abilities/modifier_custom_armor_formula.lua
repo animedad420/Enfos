@@ -42,7 +42,7 @@ if IsServer() then
 		self.checkArmor = false
 		local physicalResistance = (0.06*armor)/(1+0.06*armor)*100*-1
 		if armor < 0 then physicalResistance = ((2-(0.94^math.abs(math.max(armor,-20))))*100)-100 end
-		print("phys resist babey!!! "..physicalResistance)
+		--print("phys resist babey!!! "..physicalResistance)
 		return physicalResistance
 	end
 end
