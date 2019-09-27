@@ -569,6 +569,7 @@ function Precache( context )
 	PrecacheResource("particle","particles/units/heroes/hero_gyrocopter/gyro_guided_missile_target.vpcf", context )
 	PrecacheResource( "soundfile","soundevents/game_sounds_heroes/game_sounds_lion.vsndevts", context )
 	PrecacheResource( "soundfile","soundevents/game_sounds_ui.vsndevts", context )
+	PrecacheResource( "particle", "particles/items_fx/glyph_creeps.vpcf", context )
 
 
 	PrecacheItemByNameSync("item_spellbringer_greater_darkrift", context)
@@ -963,6 +964,7 @@ function CEnfosGameMode:InitGameMode()
     LinkLuaModifier("modifier_sniper_ms_limit_lua", "abilities/modifier_sniper_ms_limit_lua", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("lua_attribute_bonus_modifier", "abilities/lua_attribute_bonus_modifier", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_custom_armor_formula", "abilities/modifier_custom_armor_formula", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_respawn_protection", "abilities/modifier_respawn_protection", LUA_MODIFIER_MOTION_NONE)
 
 
 	local playercounter = 0
@@ -1972,6 +1974,7 @@ function CEnfosGameMode:OnPlayerPicked( event )
 	
 	--Updates the stat bonuses for the hero
 	Stats:ModifyStatBonuses(spawnedUnitIndex)
+	if spawnedUnitIndex.BB == nil then spawnedUnitIndex.BB = 0 end
 	
 	--player.spawned = true
 
@@ -3518,15 +3521,19 @@ function CEnfosGameMode:OnNPCSpawned( event )
 
 			GameRules.PLAYERS_PICKED_HERO=GameRules.PLAYERS_PICKED_HERO+1
 		else
-			spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_invulnerable", {duration = 2.5})
+			spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_respawn_protection", {duration = 2.5})
 			Timers:CreateTimer(DoUniqueString("protectKiller"), {
 				endTime = 0.001,
 				callback = function()
+					if spawnedUnit.BB < spawnedUnit:GetBuybackCooldownTime() then
+						spawnedUnit:RemoveModifierByName("modifier_respawn_protection")
+						spawnedUnit.BB = spawnedUnit:GetBuybackCooldownTime()
+					end
 					if spawnedUnit:FindModifierByName("modifier_buyback_gold_penalty") ~= nil then
-						spawnedUnit:RemoveModifierByName("modifier_invulnerable")
+						spawnedUnit:RemoveModifierByName("modifier_respawn_protection")
 					end
 					if spawnedUnit.killPro ~= nil then
-						spawnedUnit:RemoveModifierByName("modifier_invulnerable")
+						spawnedUnit:RemoveModifierByName("modifier_respawn_protection")
 						spawnedUnit.killPro = nil
 					end
 				end
